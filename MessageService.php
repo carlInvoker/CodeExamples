@@ -87,35 +87,3 @@ class MessageService {
 
 }
 
-
-//
-//
-// public function getChatsList(int $reciever_id) {
-//    $messages = Message::where(function ($query) use ($reciever_id) {
-//                           $query->where('reciever_id', '=', $reciever_id)
-//                                 ->orWhere('sender_id', '=', $reciever_id);
-//                       })
-//                       ->select('sender_id', DB::raw('MIN(status) as status'), DB::raw('MAX(created_at) as last_message_date'))
-//                       ->selectRaw("CASE WHEN sender_id = ".$reciever_id." THEN reciever_id ELSE sender_id END AS user_id")
-//                       ->groupBy('sender_id')
-//                       ->groupBy('reciever_id')
-//                       ->orderBy('status');
-//    return $messages;
-//  }
-//
-//  public function getChatsInterlocutors(Builder $messages, int $reciever_id, ?string $status, string $orderByDate) {
-//    $users = User::joinSub($messages, 'messages', function ($join) {
-//                  $join->on('users.id', '=', 'messages.user_id');
-//              })
-//              ->select('users.id', 'users.name', 'users.photo', 'messages.sender_id')
-//              ->selectRaw("CASE WHEN messages.sender_id = ".$reciever_id." THEN 1 ELSE MIN(messages.status) END AS status")
-//              ->selectRaw("MAX(messages.last_message_date) as last_message_date")
-//              ->where('users.id', '<>', $reciever_id)
-//              ->groupBy('messages.user_id')
-//              ->when(is_numeric($status), function ($query) use ($status) {
-//                        return $query->where('messages.status', $status);
-//                    })
-//              ->orderBy('messages.last_message_date', $orderByDate)
-//              ->paginate(Config::get('pagination.mainPage'));
-//    return $users;
-//  }
